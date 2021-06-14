@@ -1,0 +1,41 @@
+<!-- string interpolation: usado para renderizar variables desde nuestro componente hasta nuestro html. 
+  Dentro de los corchetes se pueden usar instrucciones de javascript (como sumas)
+  {{1 + 2}}
+-->
+
+<!-- Enlace de datos o Data Binding.
+  [(ngModel)]="title" hace un enlace entre la variable title del componente y el template(html). 
+  Cada cambio realizado en el template tendrán efecto en la variable del componente.
+-->
+
+<p>asdf</p>
+
+<input type="text" [(ngModel)]="title">
+{{title}}
+
+<input type="text" [(ngModel)]="power">
+
+<!-- Los pipes en angular tienen alto rendimiento, por lo que es recomendable preferirlos antes que crear funciones a la hora de hacer cosas como transformaciones de datos -->
+{{power | exponential}}
+
+<!--   ngIf agrega una condición a un elemento del template
+  para que se muestre o no, dependiendo de si su condición se cumple.
+-->
+<div *ngIf="title === 'Ignacio'">
+  Este es Ignacio
+</div>
+
+<div [ngSwitch]="title">
+  <p *ngSwitchCase="'Claudio'">Este es Claudio</p>
+  <p *ngSwitchCase="'Nicolas'">Este es Nicolas</p>
+  <p *ngSwitchCase="'Julian'">Este es Julian</p>
+  <p *ngSwitchDefault>No hay match</p>
+</div>
+
+<button (click)="addItem()">Add item</button>
+<ul>
+  <li *ngIf="items.length === 0">La lista esta vacia</li>
+  <li *ngFor="let name of items; index as i">{{i}} - {{name}}
+    <button (click)="deleteItem(i)">Delete</button>
+  </li>
+</ul>

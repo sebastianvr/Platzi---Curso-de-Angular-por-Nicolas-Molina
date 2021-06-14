@@ -1,0 +1,24 @@
+<mat-toolbar color="primary" class="header">
+    <mat-toolbar-row class="row between-xs">
+        <nav>
+            <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+            <a mat-button routerLink="/products" routerLinkActive="active">Products</a>
+            <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+            <a mat-button routerLink="/demo" routerLinkActive="active">Demo</a>
+        </nav>
+        <!-- Con async no necesito suscribirme a un observable, ya que angular se encargara de suscribirse y desuscribirse de un observable.
+            En este caso, tengo la variable total$ que es un observable. Con async angular se encarga de suscribirse a ella para obtener los datos y escuchar los cambios, pero, cuando ya no se necesite, se va a desuscribir.
+        
+        -->
+        <a mat-raised-button routerLink="/order" 
+        routerLinkActive="active"
+        
+        [matBadge]="total$ | async"
+        matBadgeColor= "warn">
+            <mat-icon >shopping_cart</mat-icon>
+            
+        </a>
+
+        
+    </mat-toolbar-row>
+</mat-toolbar>

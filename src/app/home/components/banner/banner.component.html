@@ -1,0 +1,21 @@
+<swiper
+[slidesPerView]="1"
+[spaceBetween]="30"
+[keyboard]="{
+  enabled: true
+}"
+[pagination]="{
+  clickable: true
+}"
+[navigation]="true"
+[autoplay]="{
+    delay: 2500,
+    disableOnInteraction: false
+  }"
+class="mySwiper"
+
+>
+    <ng-template swiperSlide *ngFor="let img of images">
+        <img [src]="img" alt="" sizes="" srcset="">
+    </ng-template>
+</swiper>

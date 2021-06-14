@@ -1,0 +1,30 @@
+<!-- Con los pipe se pueden transformar valores, cambiarles el formato -->
+<!-- <h3 appHighlight>{{product.title | uppercase}}</h3> -->
+<!--  Para modificar un elemento de html se utiliza [], como [src]-->
+<!-- <img [src]="product.image" alt="" width="250" height="250">  -->
+<!-- <br>
+<strong>{{product.price | currency}}</strong>
+<p>{{product.description | slice:0:10}}</p>
+<p>{{today | date: 'medium'}}</p>
+<button mat-stroked-button color="primary" (click)="addCart()">Agregar al carrito</button>
+<a [routerLink]="['/products', product.id]" mat-button color="warn">Ver detalle</a> -->
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{product.title | uppercase}}</mat-card-title>
+      <mat-card-subtitle>{{product.price | currency}}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="crop-image">
+        <img [src]="product.image">
+    </div>
+    
+    <mat-card-content>
+        <p>
+            {{product.description | slice:0:10}}
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-stroked-button color="primary" (click)="addCart()">Agregar al carrito</button>
+        <a [routerLink]="['/products', product.id]" mat-button color="warn">Ver detalle</a>
+    </mat-card-actions>
+  </mat-card>
