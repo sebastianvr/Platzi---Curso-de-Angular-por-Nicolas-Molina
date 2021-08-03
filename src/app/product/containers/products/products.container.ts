@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../../core/models/product.model';
 
-import { ProductsService } from '../../../core/services/products/products.service';
+// aplicando short imports
+import { Product } from '@core/models/product.model';
+import { ProductsService } from '@core/services/products/products.service';
 
 
 
