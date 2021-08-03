@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { switchMap } from 'rxjs/operators'
+import { Observable } from 'rxjs';
 
-import {ProductsService} from './../../../core/services/products/products.service';
-import {Product} from '../../../core/models/product.model';
+import { ProductsService } from '@core/services/products/products.service';
+import { Product } from '@core/models/product.model';
+
+
 
 
 @Component({
@@ -11,30 +15,20 @@ import {Product} from '../../../core/models/product.model';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  
-  // el ? hace que la propiedad sea opcional
-  product? : Product;
+
+
+  product$! : Observable<Product>;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductsService,
-  ) {
-     
-   }
+  ) { }
 
+  // implementacion de switchMap de rxjs
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      const id = params.id;
-      this.fetchProduct(id);
-    });
-    
-  }
-
-  fetchProduct(id: string) {
-    this.productService.getProduct(id)
-    .subscribe(product => {
-      this.product = product;
-    });
+    this.product$ = this.route.params
+    .pipe(
+      switchMap((params : Params) => this.productService.getProduct(params.id)))
   }
 
   createProduct() {
@@ -46,9 +40,9 @@ export class ProductDetailComponent implements OnInit {
       description: 'Nuevo producto 2'
     };
     this.productService.createProduct(newProduct)
-    .subscribe(product => {
-      console.log(product);
-    });
+      .subscribe(product => {
+        console.log(product);
+      });
   }
 
   updateProduct() {
@@ -56,17 +50,21 @@ export class ProductDetailComponent implements OnInit {
       price: 1111,
       title: 'edicion titulo'
     };
-    this.productService.updateProduct('333',newProduct)
-    .subscribe(product => {
-      console.log(product);
-    });
-  }
-  
-  deleteProduct() {
-    this.productService.deleteProduct('333')
-    .subscribe(product => {
-      console.log(product);
-    });
+    this.productService.updateProduct('333', newProduct)
+      .subscribe(product => {
+        console.log(product);
+      });
   }
 
+  deleteProduct() {
+    this.productService.deleteProduct('333')
+      .subscribe(product => {
+        console.log(product);
+      });
+  }
+
+  getRndUser(){
+    this.productService.getUserRandom()
+      .subscribe( resp => console.log(resp))
+  }
 }
