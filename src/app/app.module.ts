@@ -14,7 +14,24 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
+// sentry para recibir errores y capturarlos en un ambiente de produccion
+import * as Sentry from '@sentry/angular';
+import { Integrations } from '@sentry/tracing';
 
+Sentry.init({
+  dsn: 'https://204f3a5b01e141b1921f7456ed167a3a@o942987.ingest.sentry.io/5891803',
+  integrations: [
+    new Integrations.BrowserTracing({
+      tracingOrigins: ["localhost", 'https://yourserver.io/api'],
+      routingInstrumentation: Sentry.routingInstrumentation,
+    }),
+  ],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 @NgModule({
   declarations: [

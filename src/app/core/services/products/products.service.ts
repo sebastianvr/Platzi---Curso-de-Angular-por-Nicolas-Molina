@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
+
+import * as Sentry from '@sentry/angular';
 
 interface User {
   email: string,
@@ -43,13 +45,19 @@ export class ProductsService {
   getUserRandom(): Observable<User[]> {
     return this.http.get<any>('https://randomuser.me/api/asdasdas?resultasdasds=2sdasd')
       .pipe(
+        retry(2),
         catchError(error => throwError(this.handleError)),
         map(response => response.results as User[]),
       )
   }
 
-  private handleError(error : HttpErrorResponse){
+  getFile(){
+      return this.http.get('assets/test.txt', {responseType : 'text'})
+  }
+
+  private handleError(error: HttpErrorResponse) {
     console.log(error)
+    Sentry.captureException(error);
     return throwError('algo salió mal')
   }
 

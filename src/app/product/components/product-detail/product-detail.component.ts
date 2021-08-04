@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { ProductsService } from '@core/services/products/products.service';
 import { Product } from '@core/models/product.model';
+import { Thumbs } from 'swiper';
 
 
 
@@ -66,5 +67,12 @@ export class ProductDetailComponent implements OnInit {
   getRndUser(){
     this.productService.getUserRandom()
       .subscribe( resp => console.log(resp))
+  }
+
+  getFile(){
+    this.productService.getFile()
+      .subscribe(content =>{
+        console.log(content)
+      });
   }
 }
