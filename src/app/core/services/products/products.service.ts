@@ -43,7 +43,7 @@ export class ProductsService {
   }
 
   getUserRandom(): Observable<User[]> {
-    return this.http.get<any>('https://randomuser.me/api/asdasdas?resultasdasds=2sdasd')
+    return this.http.get<any>('https://randomuser.me/api/?results=1')
       .pipe(
         retry(2),
         catchError(error => throwError(this.handleError)),
