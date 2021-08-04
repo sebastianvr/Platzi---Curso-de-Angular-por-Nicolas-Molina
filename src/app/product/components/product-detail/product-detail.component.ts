@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 
 import { ProductsService } from '@core/services/products/products.service';
 import { Product } from '@core/models/product.model';
-import { Thumbs } from 'swiper';
+
+import * as FileSaver from 'file-saver';
 
 
 
@@ -18,7 +19,7 @@ import { Thumbs } from 'swiper';
 export class ProductDetailComponent implements OnInit {
 
 
-  product$! : Observable<Product>;
+  product$!: Observable<Product>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,8 +29,8 @@ export class ProductDetailComponent implements OnInit {
   // implementacion de switchMap de rxjs
   ngOnInit(): void {
     this.product$ = this.route.params
-    .pipe(
-      switchMap((params : Params) => this.productService.getProduct(params.id)))
+      .pipe(
+        switchMap((params: Params) => this.productService.getProduct(params.id)))
   }
 
   createProduct() {
@@ -64,15 +65,19 @@ export class ProductDetailComponent implements OnInit {
       });
   }
 
-  getRndUser(){
+  getRndUser() {
     this.productService.getUserRandom()
-      .subscribe( resp => console.log(resp))
+      .subscribe(resp => console.log(resp))
   }
 
-  getFile(){
+  getFile() {
     this.productService.getFile()
-      .subscribe(content =>{
+      .subscribe(content => {
         console.log(content)
       });
+  }
+
+  downloadFile() {
+    this.productService.getPDF().subscribe(file => FileSaver.saveAs(file, 'file.pdf'));
   }
 }

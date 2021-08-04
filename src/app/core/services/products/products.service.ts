@@ -52,7 +52,14 @@ export class ProductsService {
   }
 
   getFile(){
-      return this.http.get('assets/test.txt', {responseType : 'text'})
+      return this.http.get('assets/files/test.txt', {responseType : 'text'})
+  }
+
+  getPDF(){
+      return this.http
+        .get('assets/files/EscudoNacional.pdf', {
+          responseType: 'blob', // This must be a Blob type
+        });
   }
 
   private handleError(error: HttpErrorResponse) {
