@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { TokenService } from './core/services/token.service';
 
 //un interceptor no debe estar insertado en el scope globl del proyecto
 //por esto quito provider: 'root' 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor(
+    private tokenService : TokenService
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = this.addToken(req);
@@ -16,9 +19,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addToken(req: HttpRequest<any>) {
-    const token = 'mitokenpreferido'
+    const token = this.tokenService.getToken()
+    console.log(token)
 
-    if (true) {
+    if (token) {
       req = req.clone({
         setHeaders: {
           token,
